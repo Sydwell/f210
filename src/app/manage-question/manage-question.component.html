@@ -1,0 +1,80 @@
+<p>manage-question works!</p>
+<table class='table table-bordered table-sm table-stripped'>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Actions</th>
+      <th scope="col">Info</th>
+      <th scope="col">Emoji</th>
+      <th scope="col">Circles</th>
+    </tr>
+  </thead>
+  <tbody class=''>
+  <tr *ngFor="let item of managed; let i = index">
+    <td>{{i}}</td>
+    <td>
+    <button class="btn btn-info btn-sm mr-3" (click)="setUid(item.user_id, i)" data-toggle="modal" data-target="#addCModal"    #showModalButton>Add</button>
+    <button class="btn btn-info btn-sm mr-3" (click)="setUid(item.user_id, i)" data-toggle="modal" data-target="#removeCModal" #showModalButton>Remove</button>
+    </td>
+    <td>
+    {{ item.user_id }} {{item.cash_account}}
+  </td>
+  <td>
+    {{item.emoji}}
+  </td>
+    <td>
+      <span *ngIf="showKeys">
+        {{item.public_address}}
+        {{item.slp_address}}
+      </span>
+      <span *ngIf="!showKeys">
+        {{item.circles_text}}
+      </span>
+    </td>
+  </tr>
+</tbody>
+</table>
+<button (click)='toggleKeys();'>Toggle Keys</button>
+
+
+<div class="modal" id="addCModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add User To Circle  </h4>
+        <span class="close" data-dismiss="modal">×</span>
+      </div>
+      <div class="modal-body">
+        <p>Select Circle to add </p>
+        <p>Circle <select #qCircle (change)="selectedCircle(qCircle.value)">
+          <option [value]="qCircle.id" *ngFor="let qCircle of questionCircles" >{{qCircle.name}}</option>
+        </select></p>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warn" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="submitAddedCircle();" >Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="removeCModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Remove User From Circle  </h4>
+        <span class="close" data-dismiss="modal">×</span>
+      </div>
+      <div class="modal-body">
+        <p>Select Circle to Remove </p>
+        <p>Circle <select #qCircleR (change)="selectedCircle(qCircleR.value)">
+          <option [value]="qCircleR.id" *ngFor="let qCircleR of questionCircles" >{{qCircleR.name}}</option>
+        </select></p>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warn" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" (click)="submitRemoveCircle();" >Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

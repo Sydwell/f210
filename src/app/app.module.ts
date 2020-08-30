@@ -19,7 +19,7 @@ import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NgModule } from '@angular/core';
-
+import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from './app.component';
 
 import { ApiService } from './shared/api.service';
@@ -32,12 +32,17 @@ import { MenuComponent } from './menu/menu.component';
 // import { FavourComponent } from './favour/favour.component';
 // import { AskComponent } from './ask/ask.component';
 // import { AnswerComponent } from './answer/answer.component';
-// import { ProfileNewComponent } from './profile-new/profile-new.component';
+import { ProfileNewComponent } from './profile-new/profile-new.component';
 
 import { MustStartWithZeroDirective } from './shared/start-with-zero.directive';
 import { BeANumberDirective } from './shared/be-a-number.directive';
 import { AppPasswordDirective } from './shared/app-password.directive';
-import { ContentComponent } from './content/content.component'
+import { ContentComponent } from './content/content.component';
+import { CirclesComponent } from './circles/circles.component';
+import { QuestionsComponent } from './questions/questions.component';
+import { ManageQuestionComponent } from './manage-question/manage-question.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PromptComponent } from './prompt/prompt.component';
 
 @NgModule({
   declarations: [
@@ -51,20 +56,25 @@ import { ContentComponent } from './content/content.component'
     // FavourComponent,
     // AskComponent,
     // AnswerComponent,
-    // ProfileNewComponent
+    ProfileNewComponent,
     MustStartWithZeroDirective,
     BeANumberDirective,
     AppPasswordDirective,
-    ContentComponent
+    ContentComponent,
+    CirclesComponent,
+    QuestionsComponent,
+    ManageQuestionComponent,
+    PromptComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule.forRoot()
   ],
-  providers: [ApiService],
-  
+  providers: [CookieService, ApiService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

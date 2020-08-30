@@ -12,6 +12,7 @@ import { ApiService } from './shared/api.service';
 export class AppComponent implements OnInit {
   title = 'favour-right';
   loggedIn = false;
+  // loggedIn = true;
   showLogin = true;
   showRegistration = false;
   showRecover = false;
@@ -19,9 +20,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiService.setLoginUser(null);
+    console.log('AppComp Load ');
+
     this.apiService.doStartup().subscribe((result) => {
+      console.log(' doStartup ');
       console.log(result);
+      Global.setCirclesData(result);
     });
+
   }
 
   constructor( private apiService: ApiService
@@ -44,7 +50,7 @@ export class AppComponent implements OnInit {
   }
 
   menuProcessEvent(eventVale: string) {
-    console.log(" event " + eventVale);
+    console.log(' event ' + eventVale);
     this.showMenu = eventVale;
   }
 }

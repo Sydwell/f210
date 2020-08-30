@@ -1,16 +1,18 @@
 <div class="container-fluid" >
 
   <!-- <img src="assets/images/helping-hands-8.17.12.jpg" style="position: absolute; top: 0; left: 0; z-index: -1;"> -->
-  <img src="assets/images/helping-hands-8.17.12.jpg"
-    [ngClass]="{ fr_backgroundImageSolid: !loggedIn,  fr_backgroundImageOpacity: loggedIn}"> 
+  <!-- <div class='jumbotron bg-warning' > -->
+    <img src="assets/images/helping-hands-8.17.12.jpg"
+    [ngClass]="{ fr_backgroundImageSolid: !loggedIn,  fr_backgroundImageOpacity: loggedIn}">
+  <!-- </div> -->
   <div class='row' >
     <app-header class="offset-sm-0 offset-md-6 col-md-6 mt-4"></app-header>
   </div>
   <div class='row' >
     <div  class="offset-sm-0 offset-md-6 col-md-6 col-lg-4 mt-2">
       <ng-container *ngIf="!loggedIn"  >
-      
-      
+
+
         <!-- <div class="col-sm-6">
           &nbsp;
         </div> -->
@@ -18,36 +20,39 @@
           <ng-container *ngIf="showLogin"   >
             <app-login (loginEvent)="authEvent($event);" ></app-login>
           </ng-container>
-          <ng-container *ngIf="showRegistration">
+          <!-- <ng-container *ngIf="showRegistration">
             <app-registration (registrationEvent)="authEvent($event);"></app-registration>
           </ng-container>
           <ng-container *ngIf="showRecover">
             <app-recover (recoverEvent)="authEvent($event);"></app-recover>
-          </ng-container>
+          </ng-container> -->
         <!-- </div> -->
         <!-- <div class="col-sm">
           &nbsp;
         </div>-->
       </ng-container>
     </div>
-    
+
 
   </div>
   <ng-container *ngIf="loggedIn">
     <app-menu (menuEvent)="menuProcessEvent($event);"> </app-menu>
+    <!-- <p>{{showMenu}}</p> -->
     <div [ngSwitch]="showMenu">
-      <div *ngSwitchCase="'how'">
-        <app-how></app-how>
+      <div *ngSwitchCase="'circles'">
+        <app-circles></app-circles>
       </div>
-      <div *ngSwitchCase="'favour'">
-        <app-favour></app-favour>
+      <div *ngSwitchCase="'manage-questions'">
+        <app-manage-question></app-manage-question>
       </div>
-      <div *ngSwitchCase="'ask'">
-        <app-ask></app-ask>
+      <div *ngSwitchCase="'questions'">
+        <app-questions></app-questions>
       </div>
+
+      <!--
       <div *ngSwitchCase="'answer'">
         <app-answer></app-answer>
-      </div>
+      </div> -->
       <div *ngSwitchCase="'profile'">
         <app-profile-new></app-profile-new>
       </div>

@@ -13,26 +13,28 @@ import * as Global from '../shared/global';
 })
 
 export class LoginComponent implements OnInit {
-  
+
 
   @Output() loginEvent = new EventEmitter<string>();
   loginForm: FormGroup;
   otpForm: FormGroup;
 
-  otpRequestResponse = "";
-  invalidOtp = "";
+  otpRequestResponse = '';
+  invalidOtp = '';
+  loginFail = false;
 
-  constructor(private fb: FormBuilder  , private apiService: ApiService ) { }
+  constructor(private apiService: ApiService ) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      'mobileNumber': new FormControl(null, {validators: [Validators.required,  Validators.minLength(10),  Validators.maxLength(10)
+      mobileNumber: new FormControl(null, {validators: [Validators.required,  Validators.minLength(10),  Validators.maxLength(10)
         , mustStartWithZeroValidator(), beANumberValidator()] }),
-      "otp": new FormControl()
+      otp: new FormControl(),
+      uid: new FormControl({ value: '', disabled: true })
     });
 
     this.otpForm = new FormGroup({
-      "otps": new FormControl({ value:"", disabled: true }, [Validators.required, this.dummyValidator])
+      otps: new FormControl({ value: '', disabled: true }, [Validators.required, this.dummyValidator])
     });
   }
 
@@ -52,10 +54,10 @@ export class LoginComponent implements OnInit {
     console.log(this.loginForm );
     console.log(this.loginForm.value );
     this.apiService.doOtpRequest(this.loginForm.value).subscribe((result) => {
-     
-      this.otpForm.get('otps').enable({onlySelf:true});
-      this.otpRequestResponse = result.response; 
-      console.log('result #' + result.response + "#");
+
+      this.otpForm.get('otps').enable({onlySelf: true});
+      this.otpRequestResponse = result.response;
+      console.log('result #' + result.response + '#');
       // if (result.response.startsWith("error") {
       // } else {
       // }
@@ -78,28 +80,35 @@ export class LoginComponent implements OnInit {
     console.log('formData login' );
     console.log(this.loginForm );
     this.loginForm.get('otp').setValue(this.otpForm.value.otps.toUpperCase());
-    //"27" + loginData.mobileNumber.substr(1);
-    
+    // "27" + loginData.mobileNumber.substr(1);
+
     console.log(this.loginForm.value );
     console.log(this.otpForm.value );
     this.apiService.doLogin(this.loginForm.value).subscribe((result) => {
       // console.log('formData' );
-      // if (result.response == "updated") {
-      //   this.otpRequestResponse = "";
+      if (result.jwt === 'login fail')  {
+        // this.otpRequestResponse = "";
+        this.loginFail = true;
+        return;
+      }
+      // if (result === 'Login Fail')  {
+      //   // this.otpRequestResponse = "";
+      //   this.loginFail = true;
+      //   return;
       // }
      // this.otpRequestResponse = result.response;
-      console.log('result #' + result + "#") ;
-      console.log(result) ;
-      if (result.response == "success") {
-        this.loginEvent.emit('otp_success');
-      } else {
-        this.invalidOtp = "Invalid OTP entered, try again!";
-      }
-      
+     // console.log('result #' + result.emoji + '#') ;
+      console.log('must be a JWT ' + result) ;
+      console.log(result);
+      // if (result === -1) {
+      //   this.invalidOtp = 'Invalid OTP entered, try again!';
+      // } else {
+      this.loginEvent.emit('otp_success');
+     // }
     });
   }
 
- 
+
   // signUpClick() {
   //   this.loginEvent.emit('register');
   // }

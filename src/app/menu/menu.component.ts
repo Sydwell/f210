@@ -15,7 +15,6 @@ export class MenuComponent implements OnInit {
   }
 
   menuChange(options: string) {
-    alert("hi");
     this.menuEvent.emit(options);
   }
 

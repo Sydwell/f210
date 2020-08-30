@@ -1,0 +1,30 @@
+<table class='table table-bordered table-sm table-striped'>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Action</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let item of circles; let i = index">
+    <td>
+      {{i}}
+    </td>
+    <td>
+      {{item.name}}
+    </td>
+    <td (click)="setCircleId($event, item.id);" >
+      <!-- <button class="btn btn-info btn-sm mr-3" (click)="setUid(item.id)" data-toggle="modal" data-target="#addCModal"    #showModalButton>Add</button> -->
+      <!--  {{ item.id }} -->
+      <app-prompt  [userSupplied]="'What is name of the circle?'"  [title]="'Add Circle '"
+          (promptEvent)="receivePrompt($event)" ></app-prompt>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+<!-- data {{ showModalButton.getAttribute("data") }}
+data-toggle {{ showModalButton.getAttribute("data-toggle") }}
+data-target {{ showModalButton.getAttribute("data-target") }} -->
+<app-prompt  [userSupplied]="'What is name of the new Circle?'" [title]="'Add Top Level Circle'"
+        (promptEvent)="receivePrompt(1, $event)" (click)="setCircleId($event, 1);" ></app-prompt>
+

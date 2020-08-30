@@ -1,0 +1,109 @@
+<ul>
+  <li *ngFor="let item of questions; let i = index">
+    {{i}}
+    <button (click)="edit(item.id)" >Edit</button>
+    <button (click)="available(item.id)">Make Available</button>
+    <!-- <button (click)="remove(item.id)">X</button> -->
+    {{item.details}} {{item.creator}}
+  </li>
+</ul>
+<!-- <button data-toggle="modal" data-target="#newQModal" #showModalButton>Create a new question!</button> -->
+<button (click)="create()" >Create a new Question!</button>
+<button data-toggle="modal" data-target="#newQModal" style="display:none" #showModalButton>Create a new question!</button>
+
+<div class="modal" id="newQModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="questionForm" (ngSubmit)="submitQuestion()" >
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">{{creating?'Create':'Edit'}} a question.</h4>
+        <span class="close" data-dismiss="modal">×</span>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+
+
+        <p>Question  <input formControlName="details" size="30"></p>
+        <!-- {{ emoji | safeHtml }} -->
+        <div *ngIf='!creating'>
+          <p>Creator <input formControlName="creator" > </p>
+          <p>Checker <input formControlName="checker" > </p>
+        </div>
+        <!-- {{ qType.value }}
+        {{ qCircle.value }}
+        {{ qCircle }}
+        {{ qCircle.id }} -->
+
+         <!-- <select [formControlName]='"circle"' *ngIf="questionForm">
+          <option [ngValue]="null" disabled>Choose your profile</option>
+          <option *ngFor="let qCircle of questionCircles" [ngValue]="qCircle">
+           {{ qCircle.name }}
+          </option>
+        </select> -->
+
+        <!-- <input formControlName="circle.name" *ngIf="questionForm"> -->
+        <!-- <input [formControlName]='"circle.name"' *ngIf="questionForm"> -->
+        <!-- <input formControlName="circle.id">
+        <input [formControlName]='"circle.id"'> -->
+
+        <!-- <select [formControlName]='"circle.id"' *ngIf="questionForm">
+          <option [ngValue]="null" disabled>Choose your profile</option>
+          <option *ngFor="let qCircle of questionCircles" [ngValue]="qCircle">
+           {{ qCircle.name }}
+          </option>
+        </select> -->
+        <!-- <select [formControlName]='"circle"' >
+          <option [ngValue]="null" disabled>Choose your profile</option>
+          <option *ngFor="let qCircle of questionCircles" [ngValue]="qCircle">
+           {{ qCircle.name }}
+          </option>
+        </select> -->
+
+
+        <p>Circle <select #qCircle (change)="selectedCircle(qCircle.value)">
+          <option [value]="qC1.id"  *ngFor="let qC1 of questionCircles" >{{qC1.name}}</option>
+          <!-- <option value='multiple'>multiple</option>
+          <option value='calculate'>calculate</option> -->
+        </select></p>
+
+        <p>Type <select #qType (change)="selectedType(qType.value)">
+          <option  *ngFor="let qT1 of questionTypes" >{{qT1}}</option>
+          <!-- <option value='multiple'>multiple</option>
+          <option value='calculate'>calculate</option> -->
+        </select></p>
+        <!-- <input [formControlName]='"qType.value"'> -->
+        <!-- {{ theQuestion.type }}
+        {{ QuestionTypes.multiple }} -->
+        <p>Correct Answer <input formControlName="answer1"></p>
+        <ng-container *ngIf="qType.value==='multiple' || qType.value==='poll' "   >
+          <p>Answer 2 <input formControlName="answer2"></p>
+          <p>Answer 3 <input formControlName="answer3"></p>
+          <p>Answer 4 <input formControlName="answer4"></p>
+          <p>Answer 5 <input formControlName="answer5"></p>
+          <p>Answer 6 <input formControlName="answer6"></p>
+        </ng-container>
+        <!-- answer1: string;
+        answer2: string;
+        answer3: string;
+        answer4: string;
+        answer5: string;
+        answer6: string;
+        number_times_used: number;
+        last_used: boolean; -->
+
+        </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warn" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-danger" >Submit</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+

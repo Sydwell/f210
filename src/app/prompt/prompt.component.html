@@ -1,0 +1,23 @@
+
+
+<button class="btn btn-info btn-sm mr-3"  data-toggle="modal" data-target="#showModal"    #showModalButton>{{ title }}</button>
+
+<div class="modal" id="showModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Supply Input</h4>
+        <span class="close" data-dismiss="modal">×</span>
+      </div>
+      <div class="modal-body">
+        <p>{{ userSupplied }}</p>
+        <p>Circle <input type='text' #qCircleC>
+        </p>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warn" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="submitValue(qCircleC.value);" >Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
