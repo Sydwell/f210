@@ -147,22 +147,7 @@ export class QuestionsComponent implements OnInit {
       console.log(this.theQuestion);
       console.log(this.theQuestion.circle);
 
-      console.log(' found  ' + found + ' ' + this.theQuestion);
-      let circleName = ' -11';
-      this.questionCircles.forEach((element) => {
-        console.log(element);
-        if (element.id === this.theQuestion.circle as unknown ) {
-          circleName = element.name;
-          found = element.id;
-          this.theQuestion.circle = element;
-        }
-      });
-      if (found < 0) {
-        alert (` can not find circle for id ${this.theQuestion.circle.id} `);
-        return;
-      }
-
-      const check = prompt(`Are you sure you want to this questions to everyone in the ${circleName} Circle? `);
+      const check = prompt(`Are you sure you want to this questions to everyone in the ${this.theQuestion.circle.name} Circle? `);
       if (check === this.theQuestion.circle.name) {
         // this.theQuestion.creator = Global.loginUser.userId;
 
@@ -212,7 +197,7 @@ export class QuestionsComponent implements OnInit {
       this.questionForm.get('creator').updateValueAndValidity();
       this.questionForm.get('checker').updateValueAndValidity();
       this.qType.nativeElement.value = this.theQuestion.type;
-      this.qCircle.nativeElement.value = this.theQuestion.circle;
+      this.qCircle.nativeElement.value = this.theQuestion.circle.name;
       console.log(' this.theQuestion.circle ' + this.theQuestion.circle + ' ');
       console.log(this.theQuestion.circle.name);
       console.log(this.theQuestion.circle.id);
