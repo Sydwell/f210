@@ -33,8 +33,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class QuestionsComponent implements OnInit {
   // @ViewChild('#content') myModal: any;
   @ViewChild('showModalButton', { static: false }) showModalButton: ElementRef;
-  @ViewChild('qType', { static: false }) qType: ElementRef;
-  @ViewChild('qCircle', { static: false }) qCircle: ElementRef;
+ //  @ViewChild('qType', { static: false }) qType: ElementRef;
+  // @ViewChild('qCircle', { static: false }) qCircle: ElementRef;
   creating = false; // false editing
   $emoji = String.fromCodePoint(Global.position2unicode(22));
 
@@ -57,7 +57,7 @@ export class QuestionsComponent implements OnInit {
     id: 0,
     type: Global.questionType.single,
     circle: Global.circlesData[0],
-    details: 'What will the temperture in Cape Town be @ 1PM?',
+    details: 'What will the temperture in Cape Town be @ 2PM?',
     active: false,
     creator: 0,
     checker: 0,
@@ -118,15 +118,21 @@ export class QuestionsComponent implements OnInit {
   }
 
   selectedCircle(theCircle: Global.CirclesJson) {
-    this.theQuestion.circle = theCircle;
+    this.theQuestion = this.questionForm.value;
+    // this.theQuestion.circle = theCircle;
     console.log(' theCircle ' + theCircle );
     console.dir(theCircle);
+    console.dir(this.theQuestion);
   }
 
   submitQuestion() {
     console.log(' submitted Question ' + this.creating);
     this.theQuestion = this.questionForm.value;
     this.theQuestion.checker = 100; // TODO
+    console.log(this.theQuestion.circle);
+    // if (this.theQuestion.circle === "") {
+
+    // }
     // this.theQuestion.creator = Global.loginUser.userId;
     this.apiService.createOrEditQuestion(this.theQuestion, this.creating).subscribe((result) => {
       console.log(result);
@@ -167,9 +173,9 @@ export class QuestionsComponent implements OnInit {
   create() {
     this.creating = true;
     this.questionForm = this.fb.group(this.theQuestion);
-    this.qType.nativeElement.value = this.theQuestion.type;
-    this.qCircle.nativeElement.value = this.theQuestion.circle.id;
-    // this.qCircle.nativeElement = this.theQuestion.circle;
+    // this.qType.nativeElement.value = this.theQuestion.type;
+    // // this.qCircle.nativeElement.value = this.theQuestion.circle.name;
+    // // // this.qCircle.nativeElement = this.theQuestion.circle;
     console.log(' create ');
     this.showModalButton.nativeElement.click();
     console.log(' pos ' + Global.position2unicode(22));
@@ -183,6 +189,10 @@ export class QuestionsComponent implements OnInit {
       if (element.id === questionId) {
         this.theQuestion = element;
         found = element.id;
+        console.log(' this.theQuestion ' + this.theQuestion + ' ');
+        console.dir(this.theQuestion);
+        console.log(' this.theQuestion.circle ' + this.theQuestion.circle + ' ');
+        console.dir(this.theQuestion.circle);
       }
     });
     if (found > 0) {
@@ -196,11 +206,12 @@ export class QuestionsComponent implements OnInit {
         .disable({ onlySelf: true, emitEvent: true });
       this.questionForm.get('creator').updateValueAndValidity();
       this.questionForm.get('checker').updateValueAndValidity();
-      this.qType.nativeElement.value = this.theQuestion.type;
-      this.qCircle.nativeElement.value = this.theQuestion.circle.name;
+      // this.qType.nativeElement.value = this.theQuestion.type;
+      // // this.qCircle.nativeElement.value = this.theQuestion.circle.name;
+      // // // this.qCircle.nativeElement.value = 'Sport';
       console.log(' this.theQuestion.circle ' + this.theQuestion.circle + ' ');
       console.log(this.theQuestion.circle.name);
-      console.log(this.theQuestion.circle.id);
+      // console.log(this.qCircle.nativeElement.value);
       this.showModalButton.nativeElement.click();
     } else {
       alert (` invalid ${questionId} `);
@@ -229,5 +240,14 @@ export class QuestionsComponent implements OnInit {
         });
       }
     }
+  }
+
+  /**
+   * https://stackoverflow.com/a/41504893/344050
+   *
+   */
+  customTrackBy(index: number, obj: any): any {
+    // return index;
+    return obj.id;
   }
 }

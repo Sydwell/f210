@@ -205,16 +205,18 @@ export class ApiService {
     );
   }
 
-  public createOrEditQuestion(newQuestion: Global.QuestionJson, creating: boolean) {
+  public createOrEditQuestion(newQuestionParm: Global.QuestionJson, creating: boolean) {
+   // const newQuestion = newQuestionParm;
     let theAction = 'editQuestion';
     if (creating) {
       theAction = 'createQuestion';
     }
     console.log('Called ' + creating + ' ' + theAction);
-    console.log(newQuestion);
+    console.log(newQuestionParm);
+    // newQuestion.circle = newQuestion.circle.id as unknown as Global.CirclesJson;
     const paramBody = {
       action: theAction,
-      prop1: newQuestion,
+      prop1: newQuestionParm,
     };
     return this.http.post(Global.favURL, JSON.stringify(paramBody), Global.apiHeader) // , Global.getGenericHeader()
       .pipe(
@@ -225,8 +227,8 @@ export class ApiService {
         }),
       // TODO
         catchError(error => {
-          alert (error.error.returned);
-          console.log (error.error);
+          alert (error.error);
+          console.error(error);
           return of(false);
         })
     );
