@@ -86,6 +86,7 @@ export class QuestionsComponent implements OnInit {
       console.log(result);
       console.log(result[0]);
       console.log(result[0].circle);
+      console.log(result[0].type);
       // jQuery(() => {
       //   jQuery('[data-toggle="tooltip"]').tooltip();
       // });
@@ -99,19 +100,24 @@ export class QuestionsComponent implements OnInit {
   newQuestion() {
     console.log('New Question button clicked ');
   }
+
   selectedType(theType: Global.questionType) {
-    this.theQuestion.type = theType;
+    this.theQuestion = this.questionForm.value;
     console.log(' theType ' + theType );
     console.dir(theType);
+    console.dir(this.theQuestion.type);
    // this.theQuestion.answer1 = "";
   // alert(' HEEER #' + this.theQuestion.type + '#' + Global.questionType.poll.valueOf+ '#' );
     if ( String(this.theQuestion.type) === 'poll') {
-     // alert(' HEEER ' + theType);
+      console.log(' HEEER ' + theType);
       this.theQuestion.answer1 = 'Strong Agree';
       this.theQuestion.answer2 = 'Agree';
       this.theQuestion.answer3 = 'Neutral';
       this.theQuestion.answer4 = 'Disagree';
       this.theQuestion.answer5 = 'Strongly Disagree';
+      if (this.theQuestion.checker === undefined) {
+        this.theQuestion.checker = -1;
+      }
       this.questionForm.setValue(this.theQuestion);
     }
     // alert(' theType ' + theType);

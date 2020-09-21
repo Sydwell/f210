@@ -9,9 +9,7 @@
 </ul>
 <!-- <button data-toggle="modal" data-target="#newQModal" #showModalButton>Create a new question!</button> -->
 <button (click)="create()">Create a new Question!</button>
-<button data-toggle="modal" data-target="#newQModal" style="display: none" #showModalButton >
-  Create a new question!
-</button>
+<button data-toggle="modal" data-target="#newQModal" style="display: none" #showModalButton>  Create a new question! </button>
 
 <div class="modal" id="newQModal">
   <div class="modal-dialog">
@@ -27,38 +25,108 @@
 
         <!-- Modal body -->
         <div class="modal-body">
-          <label>Question</label><textarea formControlName="details" size="30" rows="4" ></textarea>
-          <!-- {{ emoji | safeHtml }} -->
-          <div *ngIf="!creating">
-            <label>Creator</label><input formControlName="creator" />
-            <label>Checker</label><input formControlName="checker" />
+          <div class="row">
+            <div class="col-md-6">
+              <label>Question</label>
+            </div>
+            <div class="col-md-12">
+              <textarea class="form-control" formControlName="details" size="30" rows="4"></textarea>
+            </div>
           </div>
 
-          <p>
-            <label>Circle {{ questionForm.get("circle").value.name }}</label>
-            <select [formControlName]="'circle'" (change)="selectedCircle('freeky')" >
-              <option [ngValue]="null" disabled>Choose a circle</option>
-              <option [ngValue]="qC1.id" value="qC1.name" *ngFor="let qC1 of questionCircles; trackBy: customTrackBy" >
-                {{ qC1.name }}
-              </option>
-            </select>
-          </p>
+          <!-- {{ emoji | safeHtml }} -->
+          <div *ngIf="!creating">
+            <div class="row">
+              <div class="col-md-6 text-right">
+                <label>Creator</label>
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" formControlName="creator" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 text-right">
+                <label>Checker</label>
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" formControlName="checker" />
+              </div>
+            </div>
+          </div>
 
-          <p>
-            Type
-            <select [formControlName]="'type'" (change)="selectedType('qType.value')">
-              <option *ngFor="let qT1 of questionTypes">{{ qT1 }}</option>
-            </select>
-          </p>
+          <div class="row">
+            <div class="col-md-6 text-right">
+              <label>Circle {{ questionForm.get("circle").value.name }}</label>
+            </div>
+            <div class="col-md-6">
+              <select class="form-control" [formControlName]="'circle'" (change)="selectedCircle('freeky')" >
+                <option [ngValue]="null" disabled>Choose a circle</option>
+                <option [ngValue]="qC1.id" value="qC1.name" *ngFor="let qC1 of questionCircles; trackBy: customTrackBy"> {{ qC1.name }} </option>
+              </select>
+            </div>
+          </div>
 
-          <p>Correct Answer <input formControlName="answer1" /></p>
+          <div class="row">
+            <div class="col-md-6 text-right">
+              <label>Type {{ questionForm.get("type").value.name }}</label>
+            </div>
+            <div class="col-md-6">
+              <select class="form-control" [formControlName]="'type'" (change)="selectedType('qT1')">
+                <option [ngValue]="null" disabled> Choose a type </option>
+                <option [ngValue]="qT1" value="qT1" *ngFor="let qT1 of questionTypes"> {{ qT1 }} </option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 text-right">
+              <label>Correct Answer </label>
+            </div>
+            <div class="col-md-6">
+              <input class="form-control" formControlName="answer1" >
+            </div>
+          </div>
           <!-- {{ questionForm.get('type').value }} -->
-          <ng-container *ngIf="questionForm.get('type').value === 'multiple' || questionForm.get('type').value === 'poll'" >
-            <p>Answer 2 <input formControlName="answer2" /></p>
-            <p>Answer 3 <input formControlName="answer3" /></p>
-            <p>Answer 4 <input formControlName="answer4" /></p>
-            <p>Answer 5 <input formControlName="answer5" /></p>
-            <p>Answer 6 <input formControlName="answer6" /></p>
+          <ng-container *ngIf="questionForm.get('type').value === 'multiple' || questionForm.get('type').value === 'poll' ">
+            <div class="row">
+              <div class="col-md-6 text-right">
+                <label>Answer 2 </label>
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" formControlName="answer2" >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 text-right">
+                <label>Answer 3 </label>
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" formControlName="answer3" >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 text-right">
+                <label>Answer 4 </label>
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" formControlName="answer4" >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 text-right">
+                <label>Answer 5 </label>
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" formControlName="answer5" >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 text-right">
+                <label>Answer 6 </label>
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" formControlName="answer6" >
+              </div>
+            </div>
           </ng-container>
         </div>
 
