@@ -17,29 +17,20 @@ import {
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DomSanitizer } from '@angular/platform-browser';
 
-// @Pipe({
-//   name: 'safeHtml'
-// })
-// export class SafeHtmlPipe implements PipeTransform {
-//     constructor(private domSanitizer: DomSanitizer) { }
-//     transform(html) {
-//     return this.domSanitizer.bypassSecurityTrustHtml(html);
-//     }
-// }
 @Component({
   selector: 'app-questions',
   templateUrl: './questions.component.html',
 })
 export class QuestionsComponent implements OnInit {
-  // @ViewChild('#content') myModal: any;
-  @ViewChild('showModalButton', { static: false }) showModalButton: ElementRef;
- //  @ViewChild('qType', { static: false }) qType: ElementRef;
-  // @ViewChild('qCircle', { static: false }) qCircle: ElementRef;
+
+  @ViewChild('showModalButton', { static: false }) showModalButton: ElementRef; // To enabled closing the modal box
+
   creating = false; // false editing
   $emoji = String.fromCodePoint(Global.position2unicode(22));
 
   // questionForm = new FormGroup();
   questions = Global.questionsData;
+  questionSelectedIndex: number;
   questionCircles = Global.circlesData;
   questionCircle: Global.CirclesJson;
   // questionTypes =  ['single', 'multiple', 'calculated'];
@@ -82,6 +73,7 @@ export class QuestionsComponent implements OnInit {
       this.questions = result;
       // this.questions.;
       Global.setQuestionsData(result);
+      this.questionSelectedIndex = Global.questionsData.length;
       console.log(' result ');
       console.log(result);
       console.log(result[0]);
@@ -101,15 +93,15 @@ export class QuestionsComponent implements OnInit {
     console.log('New Question button clicked ');
   }
 
-  selectedType(theType: Global.questionType) {
+  selectedType() {
     this.theQuestion = this.questionForm.value;
-    console.log(' theType ' + theType );
-    console.dir(theType);
+    // console.log(' theType ' + theType );
+    // console.dir(theType);
     console.dir(this.theQuestion.type);
    // this.theQuestion.answer1 = "";
   // alert(' HEEER #' + this.theQuestion.type + '#' + Global.questionType.poll.valueOf+ '#' );
     if ( String(this.theQuestion.type) === 'poll') {
-      console.log(' HEEER ' + theType);
+      // console.log(' HEEER ' + theType);
       this.theQuestion.answer1 = 'Strong Agree';
       this.theQuestion.answer2 = 'Agree';
       this.theQuestion.answer3 = 'Neutral';
@@ -123,13 +115,13 @@ export class QuestionsComponent implements OnInit {
     // alert(' theType ' + theType);
   }
 
-  selectedCircle(theCircle: Global.CirclesJson) {
-    this.theQuestion = this.questionForm.value;
-    // this.theQuestion.circle = theCircle;
-    console.log(' theCircle ' + theCircle );
-    console.dir(theCircle);
-    console.dir(this.theQuestion);
-  }
+  // selectedCircle(theCircle: Global.CirclesJson) {
+  //   this.theQuestion = this.questionForm.value;
+  //   // this.theQuestion.circle = theCircle;
+  //   console.log(' theCircle ' + theCircle );
+  //   console.dir(theCircle);
+  //   console.dir(this.theQuestion);
+  // }
 
   submitQuestion() {
     console.log(' submitted Question ' + this.creating);
@@ -143,6 +135,7 @@ export class QuestionsComponent implements OnInit {
     this.apiService.createOrEditQuestion(this.theQuestion, this.creating).subscribe((result) => {
       console.log(result);
       this.showModalButton.nativeElement.click();
+      this.questions[this.questionSelectedIndex] = this.theQuestion; // writing the data back to the Global variable
     });
   }
 
@@ -190,17 +183,29 @@ export class QuestionsComponent implements OnInit {
 
   edit(questionId: number) {
     let found = -1;
+    // this.questionSelectedIndex = 0;
     this.creating = false;
-    this.questions.forEach((element) => {
-      if (element.id === questionId) {
-        this.theQuestion = element;
-        found = element.id;
-        console.log(' this.theQuestion ' + this.theQuestion + ' ');
-        console.dir(this.theQuestion);
-        console.log(' this.theQuestion.circle ' + this.theQuestion.circle + ' ');
-        console.dir(this.theQuestion.circle);
+    for (let j = 0; j < this.questions.length; j++) { // using a for loop because we need to break out of the loop
+      if (this.questions[j].id === questionId) {
+        this.theQuestion = this.questions[j];
+        found = this.questions[j].id;
+        this.questionSelectedIndex = j; // Required so that we can write data back to questions array
+        break;
       }
-    });
+      console.log(' this.theQuestion ' + this.questions[j].id + ' j ' + j + ' questionId ' + questionId);
+    }
+    // this.questions.forEach((element) => {
+    //   if (element.id === questionId) {
+    //     this.theQuestion = element;
+    //     found = element.id;
+    //     console.log(' this.theQuestion ' + this.theQuestion + ' questionSelectedIndex ' + this.questionSelectedIndex);
+    //     console.dir(this.theQuestion);
+    //     console.log(' this.theQuestion.circle ' + this.theQuestion.circle + ' ');
+    //     console.dir(this.theQuestion.circle);
+    //     break;
+    //   }
+    //   this.questionSelectedIndex++;
+    // });
     if (found > 0) {
       this.creating = false;
       this.questionForm = this.fb.group(this.theQuestion);

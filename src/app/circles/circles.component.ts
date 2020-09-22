@@ -36,7 +36,6 @@ export class CirclesComponent implements OnInit {
     console.log(` receivePrompt Event ${$event} this.clickedCircleId ${this.clickedCircleId}`);
     this.apiService.createCircle(this.clickedCircleId, this.newCircleName).subscribe((result) => {
       console.log(`result #${result}# this.clickedCircleId ${this.clickedCircleId}`);
-      // alert (' result ');
     });
   }
 

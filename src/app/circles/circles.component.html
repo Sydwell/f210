@@ -26,5 +26,5 @@
 data-toggle {{ showModalButton.getAttribute("data-toggle") }}
 data-target {{ showModalButton.getAttribute("data-target") }} -->
 <app-prompt  [userSupplied]="'What is name of the new Circle?'" [title]="'Add Top Level Circle'"
-        (promptEvent)="receivePrompt(1, $event)" (click)="setCircleId($event, 1);" ></app-prompt>
+        (promptEvent)="receivePrompt($event)" (click)="setCircleId($event, 1);" ></app-prompt>
 

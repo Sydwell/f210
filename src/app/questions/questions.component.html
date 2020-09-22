@@ -59,7 +59,7 @@
               <label>Circle {{ questionForm.get("circle").value.name }}</label>
             </div>
             <div class="col-md-6">
-              <select class="form-control" [formControlName]="'circle'" (change)="selectedCircle('freeky')" >
+              <select class="form-control" [formControlName]="'circle'"  > <!-- (change)="selectedCircle()" -->
                 <option [ngValue]="null" disabled>Choose a circle</option>
                 <option [ngValue]="qC1.id" value="qC1.name" *ngFor="let qC1 of questionCircles; trackBy: customTrackBy"> {{ qC1.name }} </option>
               </select>
@@ -71,7 +71,7 @@
               <label>Type {{ questionForm.get("type").value.name }}</label>
             </div>
             <div class="col-md-6">
-              <select class="form-control" [formControlName]="'type'" (change)="selectedType('qT1')">
+              <select class="form-control" [formControlName]="'type'" (change)="selectedType()">
                 <option [ngValue]="null" disabled> Choose a type </option>
                 <option [ngValue]="qT1" value="qT1" *ngFor="let qT1 of questionTypes"> {{ qT1 }} </option>
               </select>
