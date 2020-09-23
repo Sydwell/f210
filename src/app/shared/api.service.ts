@@ -250,7 +250,7 @@ export class ApiService {
     );
   }
 
-  public makeAvailable(qId: number, circleId: number) {
+  public makeAvailable(qId: number, circleId: string) {
     console.log(`Called makeAvailable qId ${qId} circleId ${circleId} `);
     const paramBody = {
       action: 'makeAvailable',
@@ -316,7 +316,7 @@ export class ApiService {
       //  catchError(this.handleError)
     );
   }
-  public addUser2Circle(circleData: number, userId: number): Observable<string> {
+  public addUser2Circle(circleData: string, userId: number): Observable<string> {
     // TODO also check if not login
     console.log(` addUser2Circle ${circleData} userId ${userId}`);
     const paramBody = {
@@ -345,7 +345,7 @@ export class ApiService {
     );
   }
 
-  public removeUserFromCircle(circleData: number, userId: number): Observable<string> {
+  public removeUserFromCircle(circleData: string, userId: number): Observable<Global.GenericResponseJson> {
     // TODO also check if not login
     // console.log(registrationData);
     const paramBody = {
@@ -356,18 +356,19 @@ export class ApiService {
     return this.http.post(Global.favURL, JSON.stringify(paramBody), Global.apiHeader) // , Global.getGenericHeader()
       .pipe(
         // tap => console.log('getInteractions: ' + data),
-        tap((response: any) => {
+        tap((response: Global.GenericResponseJson) => {
           console.log(' testing');
           console.log(response);
-          let loginObj: any;
-          try {
-            loginObj = JSON.parse(response);
-          } catch (objError) {
-            throw new Error('Unable to removeUserFromCircle');
-          }
         }),
-      // TODO
-      //  catchError(this.handleError)
+        catchError(error => {
+          alert (error.error);
+          console.log (error);
+          // const errObj : GenericResponseJson = {};
+          // return { returned: 'Error',
+          //   value: ''};
+          return of ({ returned: 'Error',  value: error.error });
+         // return throwError(error);
+        })
     );
   }
 

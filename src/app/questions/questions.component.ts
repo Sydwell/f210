@@ -1,3 +1,9 @@
+/**
+ * 1 Created question is not set in global data
+ * 2 Created userid not stored in created question
+ * 3 Handle " " in  questions
+ */
+
 import {
   Component,
   OnInit,
@@ -133,6 +139,7 @@ export class QuestionsComponent implements OnInit {
     // }
     // this.theQuestion.creator = Global.loginUser.userId;
     this.apiService.createOrEditQuestion(this.theQuestion, this.creating).subscribe((result) => {
+      console.log(' Back from apiService ');
       console.log(result);
       this.showModalButton.nativeElement.click();
       this.questions[this.questionSelectedIndex] = this.theQuestion; // writing the data back to the Global variable
@@ -198,7 +205,7 @@ export class QuestionsComponent implements OnInit {
     //   if (element.id === questionId) {
     //     this.theQuestion = element;
     //     found = element.id;
-    //     console.log(' this.theQuestion ' + this.theQuestion + ' questionSelectedIndex ' + this.questionSelectedIndex);
+    //     console.log(' this.theQuestion' + this.theQuestion + ' questionSelectedIndex ' + this.questionSelectedIndex);
     //     console.dir(this.theQuestion);
     //     console.log(' this.theQuestion.circle ' + this.theQuestion.circle + ' ');
     //     console.dir(this.theQuestion.circle);

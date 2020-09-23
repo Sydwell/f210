@@ -55,12 +55,12 @@ export function setJwtData(newJwt) {
 }
 
 export interface CirclesJson {
-  id: number;
+  id: string;
   name: string;
-  owner: number;
+  owner: string;
   lastName: string;
   can_leaf: boolean;
-  root: number;
+  root: string;
   description: string;
 }
 

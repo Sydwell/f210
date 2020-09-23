@@ -11,7 +11,7 @@
 <button (click)="create()">Create a new Question!</button>
 <button data-toggle="modal" data-target="#newQModal" style="display: none" #showModalButton>  Create a new question! </button>
 
-<div class="modal" id="newQModal">
+<div class="modal" >
   <div class="modal-dialog">
     <div class="modal-content">
       <form [formGroup]="questionForm" (ngSubmit)="submitQuestion()">

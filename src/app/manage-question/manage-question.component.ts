@@ -9,13 +9,15 @@ import { ApiService } from '../shared/api.service';
   styleUrls: ['./manage-question.component.css']
 })
 export class ManageQuestionComponent implements OnInit {
-  @ViewChild('showModalButton', { static: false }) showModalButton: ElementRef;
+  @ViewChild('showModalAdd', { static: false }) showModalAdd: ElementRef; // #showModalAdd
+  @ViewChild('showModalRemove', { static: false }) showModalRemove: ElementRef;
+
   managed = Global.managedData;
   showKeys = false;
   questionCircles = Global.circlesData;
-  questionCircleId = -1;
+  questionCircleId = '';
   selectedId = -1;
-  realIndex = -1;
+  realIndex = '';
 
   constructor( private apiService: ApiService) { }
 
@@ -34,18 +36,18 @@ export class ManageQuestionComponent implements OnInit {
     this.showKeys = !this.showKeys;
   }
 
-  setUid(newUid: number, i: number) {
+  setUid(newUid: number, i: string) {
     this.selectedId = newUid;
     this.realIndex = i;
     console.log(' this.selectedId ' + this.selectedId);
   }
 
-  showModalClick(/* i: number, id: number */) {
-    // this.selectedId = id;
-    this.showModalButton.nativeElement.click();
-  }
+  // showModalClick(/* i: number, id: number */) {
+  //   // this.selectedId = id;
+  //   this.showModalButton.nativeElement.click();
+  // }
 
-  selectedCircle(theId: number) {
+  selectedCircle(theId: string) {
     this.questionCircleId = theId;
     console.log(' this.questionCircleId' + theId);
   }
@@ -53,16 +55,25 @@ export class ManageQuestionComponent implements OnInit {
   submitAddedCircle() {
     this.apiService.addUser2Circle(this.questionCircleId, this.selectedId).subscribe((result) => {
       console.log('result #' + result + '# this.realIndex #' + this.realIndex );
+      const circleText2add = this.questionCircles.find(x => x.id === this.questionCircleId).name;
       console.log(this.managed[this.realIndex] );
       console.log(this.managed[this.realIndex].circles_text );
-      this.managed[this.realIndex].circles_text.push(result);
+      console.log(' circleText2add ' + circleText2add);
+      this.managed[this.realIndex].circles_text.push(circleText2add);
+      this.ngOnInit();
+      this.showModalAdd.nativeElement.click();
     });
   }
 
   submitRemoveCircle() {
     this.apiService.removeUserFromCircle(this.questionCircleId, this.selectedId).subscribe((result) => {
-      console.log('result #' + result + '#');
-    });
+      const circleText2remove = this.questionCircles.find(x => x.id === this.questionCircleId).name; //
+      console.log(`result #${result}# this.selectedId #${this.selectedId} circleText2remove #${circleText2remove}#`);
+      // const tArray = this.managed[this.realIndex].circles_text;
+      // this.managed[this.realIndex].circles_text = this.managed[this.realIndex].circles_text.replace(circleText2remove, '');
+      this.ngOnInit();
+      this.showModalRemove.nativeElement.click();
+    }, err => {}, () => {});
   }
 
 }
