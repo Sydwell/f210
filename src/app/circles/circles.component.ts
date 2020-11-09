@@ -26,11 +26,12 @@ export class CirclesComponent implements OnInit {
 
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
     console.log(' PromptComponent: ', PromptComponent);
   }
 
-  receivePrompt($event) {
+    receivePrompt($event, s: string) {
     this.newCircleName = $event;
     const parentLevel = this.clickedCircleId;
     console.log(` receivePrompt Event ${$event} this.clickedCircleId ${this.clickedCircleId}`);

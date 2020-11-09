@@ -16,7 +16,7 @@
       <!-- <button class="btn btn-info btn-sm mr-3" (click)="setUid(item.id)" data-toggle="modal" data-target="#addCModal"    #showModalButton>Add</button> -->
       <!--  {{ item.id }} -->
       <app-prompt  [userSupplied]="'What is name of the circle?'"  [title]="'Add Circle '"
-          (promptEvent)="receivePrompt($event)" ></app-prompt>
+          (promptEvent)="receivePrompt($event,$event)" (click)="submitCreateCircle" ></app-prompt>
     </td>
   </tr>
 </tbody>

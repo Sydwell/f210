@@ -1,0 +1,16 @@
+.navbar {
+  width: 100%;
+}
+.navbar ul {
+  list-style-type: none; /*to remove bullets*/
+  text-align: center;
+  margin: 0px;
+  width: 90%;
+  overflow: hidden;
+  cursor: pointer;
+}
+.navbar li{
+  float: left;
+  padding: 10px 16px;
+}
+

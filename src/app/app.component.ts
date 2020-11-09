@@ -27,12 +27,10 @@ export class AppComponent implements OnInit {
       console.log(result);
       Global.setCirclesData(result);
     });
-
   }
 
   constructor( private apiService: ApiService
     ) { }
-
   authEvent(eventValue: string) {
     this.showLogin = false;
     this.showRegistration = false;
@@ -46,7 +44,6 @@ export class AppComponent implements OnInit {
       case 'recover':  this.showRecover = true; break;
       case 'login':  this.showLogin = true; break;
     }
-
   }
 
   menuProcessEvent(eventVale: string) {

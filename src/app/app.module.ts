@@ -2,6 +2,8 @@
 // import { NgModule } from '@angular/core';
 
 // import { AppComponent } from './app.component';
+// tslint:disable-next-line:label-position no-unused-expression
+
 
 // @NgModule({
 //   declarations: [
@@ -15,6 +17,7 @@
 // })
 // export class AppModule { }
 import { BrowserModule } from '@angular/platform-browser';
+import {ToastModule, ToastService} from 'ng-uikit-pro-standard';
 import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 

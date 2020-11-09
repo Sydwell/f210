@@ -9,6 +9,8 @@ import { ApiService } from '../shared/api.service';
   styleUrls: ['./manage-question.component.css']
 })
 export class ManageQuestionComponent implements OnInit {
+  alert1 = false;
+  alert2 = false;
   @ViewChild('showModalButton', { static: false }) showModalButton: ElementRef;
   managed = Global.managedData;
   showKeys = false;
@@ -57,12 +59,19 @@ export class ManageQuestionComponent implements OnInit {
       console.log(this.managed[this.realIndex].circles_text );
       this.managed[this.realIndex].circles_text.push(result);
     });
+    this.alert1 = true;
   }
 
   submitRemoveCircle() {
     this.apiService.removeUserFromCircle(this.questionCircleId, this.selectedId).subscribe((result) => {
       console.log('result #' + result + '#');
     });
+    this.alert2 = true;
+  }
+
+  closeAlert() {
+    this.alert1 = false;
+    this.alert2 = false;
   }
 
 }
